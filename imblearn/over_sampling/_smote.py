@@ -323,7 +323,7 @@ BorderlineSMOTE # doctest: +NORMALIZE_WHITESPACE
         self.nn_m_ = check_neighbors_object(
             "m_neighbors", self.m_neighbors, additional_neighbor=1
         )
-        # self.nn_m_.set_params(**{"n_jobs": self.n_jobs})
+        self.nn_m_.set_params(**{"n_jobs": self.n_jobs})
         if self.kind not in ("borderline-1", "borderline-2"):
             raise ValueError(
                 'The possible "kind" of algorithm are '

@@ -189,7 +189,7 @@ NearMiss # doctest: +NORMALIZE_WHITESPACE
         """Private function to create the NN estimator"""
 
         self.nn_ = check_neighbors_object("n_neighbors", self.n_neighbors)
-        # self.nn_.set_params(**{"n_jobs": self.n_jobs})
+        self.nn_.set_params(**{"n_jobs": self.n_jobs})
 
         if self.version == 3:
             self.nn_ver3_ = check_neighbors_object(
