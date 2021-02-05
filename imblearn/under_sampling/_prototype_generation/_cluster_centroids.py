@@ -116,6 +116,7 @@ ClusterCentroids # doctest: +NORMALIZE_WHITESPACE
 
     def _validate_estimator(self):
         """Private function to create the KMeans estimator"""
+        from cuml.cluster import KMeans as cuKMeans
         if self.n_jobs != "deprecated":
             warnings.warn(
                 "'n_jobs' was deprecated in 0.7 and will be removed in 0.9",
@@ -123,7 +124,8 @@ ClusterCentroids # doctest: +NORMALIZE_WHITESPACE
             )
         if self.estimator is None:
             self.estimator_ = KMeans(random_state=self.random_state)
-        elif isinstance(self.estimator, KMeans):
+        # elif isinstance(self.estimator, KMeans):
+        elif isinstance(self.estimator, KMeans) or isinstance(self.estimator, cuKMeans):
             self.estimator_ = clone(self.estimator)
         else:
             raise ValueError(

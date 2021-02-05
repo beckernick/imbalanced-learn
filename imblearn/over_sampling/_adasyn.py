@@ -100,7 +100,7 @@ ADASYN # doctest: +NORMALIZE_WHITESPACE
         self.nn_ = check_neighbors_object(
             "n_neighbors", self.n_neighbors, additional_neighbor=1
         )
-        self.nn_.set_params(**{"n_jobs": self.n_jobs})
+        # self.nn_.set_params(**{"n_jobs": self.n_jobs})
 
     def _fit_resample(self, X, y):
         self._validate_estimator()

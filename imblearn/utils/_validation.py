@@ -91,7 +91,7 @@ def check_neighbors_object(nn_name, nn_object, additional_neighbor=0):
     """
     if isinstance(nn_object, Integral):
         return NearestNeighbors(n_neighbors=nn_object + additional_neighbor)
-    elif isinstance(nn_object, KNeighborsMixin):
+    elif _is_kneighbors_like(nn_object):
         return clone(nn_object)
     else:
         raise_isinstance_error(nn_name, [int, KNeighborsMixin], nn_object)
@@ -638,3 +638,7 @@ def _deprecate_positional_args(f):
         kwargs.update({k: arg for k, arg in zip(sig.parameters, args)})
         return f(**kwargs)
     return inner_f
+
+
+def _is_kneighbors_like(estimator):
+    return hasattr(estimator, "kneighbors") and hasattr(estimator, "kneighbors_graph")

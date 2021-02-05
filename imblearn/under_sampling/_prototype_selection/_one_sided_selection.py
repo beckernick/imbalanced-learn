@@ -8,7 +8,7 @@ from collections import Counter
 
 import numpy as np
 
-from sklearn.base import clone
+from sklearn.base import clone, is_classifier
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.utils import check_random_state, _safe_indexing
 
@@ -17,7 +17,7 @@ from ._tomek_links import TomekLinks
 from ...utils import Substitution
 from ...utils._docstring import _n_jobs_docstring
 from ...utils._docstring import _random_state_docstring
-from ...utils._validation import _deprecate_positional_args
+from ...utils._validation import _deprecate_positional_args, _is_kneighbors_like
 
 
 @Substitution(
@@ -117,7 +117,8 @@ class OneSidedSelection(BaseCleaningSampler):
             self.estimator_ = KNeighborsClassifier(
                 n_neighbors=self.n_neighbors, n_jobs=self.n_jobs
             )
-        elif isinstance(self.n_neighbors, KNeighborsClassifier):
+        # elif isinstance(self.n_neighbors, KNeighborsClassifier):
+        elif _is_kneighbors_like(self.n_neighbors) and is_classifier(self.n_neighbors):
             self.estimator_ = clone(self.n_neighbors)
         else:
             raise ValueError(

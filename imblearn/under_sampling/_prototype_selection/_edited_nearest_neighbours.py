@@ -118,7 +118,7 @@ EditedNearestNeighbours # doctest: +NORMALIZE_WHITESPACE
         self.nn_ = check_neighbors_object(
             "n_neighbors", self.n_neighbors, additional_neighbor=1
         )
-        self.nn_.set_params(**{"n_jobs": self.n_jobs})
+        # self.nn_.set_params(**{"n_jobs": self.n_jobs})
 
         if self.kind_sel not in SEL_KIND:
             raise NotImplementedError
@@ -474,9 +474,12 @@ AllKNN # doctest: +NORMALIZE_WHITESPACE
         class_minority = min(target_stats, key=target_stats.get)
 
         self.sample_indices_ = np.arange(X.shape[0], dtype=int)
+        from sklearn.base import clone
 
         for curr_size_ngh in range(1, self.nn_.n_neighbors):
-            self.enn_.n_neighbors = curr_size_ngh
+            # import pdb; pdb.set_trace()
+            # self.enn_.n_neighbors = curr_size_ngh
+            self.enn_.n_neighbors = clone(self.enn_.n_neighbors).set_params(**{"n_neighbors": curr_size_ngh})
 
             X_enn, y_enn = self.enn_.fit_resample(X_, y_)
 
