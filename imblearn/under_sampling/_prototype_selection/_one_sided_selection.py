@@ -117,7 +117,6 @@ class OneSidedSelection(BaseCleaningSampler):
             self.estimator_ = KNeighborsClassifier(
                 n_neighbors=self.n_neighbors, n_jobs=self.n_jobs
             )
-        # elif isinstance(self.n_neighbors, KNeighborsClassifier):
         elif _is_kneighbors_like(self.n_neighbors) and is_classifier(self.n_neighbors):
             self.estimator_ = clone(self.n_neighbors)
         else:

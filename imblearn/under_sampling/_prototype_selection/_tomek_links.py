@@ -125,8 +125,6 @@ TomekLinks # doctest: +NORMALIZE_WHITESPACE
     def _fit_resample(self, X, y):
         # Find the nearest neighbour of every point
         nn = NearestNeighbors(n_neighbors=2, n_jobs=self.n_jobs)
-        # import cuml
-        # nn = cuml.neighbors.NearestNeighbors(n_neighbors=2)
         nn.fit(X)
         nns = nn.kneighbors(X, return_distance=False)[:, 1]
 
