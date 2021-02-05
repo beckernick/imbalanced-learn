@@ -124,7 +124,6 @@ ClusterCentroids # doctest: +NORMALIZE_WHITESPACE
             )
         if self.estimator is None:
             self.estimator_ = KMeans(random_state=self.random_state)
-        # elif isinstance(self.estimator, KMeans):
         elif isinstance(self.estimator, KMeans) or isinstance(self.estimator, cuKMeans):
             self.estimator_ = clone(self.estimator)
         else:

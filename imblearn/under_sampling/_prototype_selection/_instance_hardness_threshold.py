@@ -10,7 +10,7 @@ from collections import Counter
 
 import numpy as np
 
-from sklearn.base import ClassifierMixin, clone, is_classifier
+from sklearn.base import clone, is_classifier
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.ensemble._base import _set_random_states
 from sklearn.model_selection import StratifiedKFold
@@ -118,7 +118,6 @@ class InstanceHardnessThreshold(BaseUnderSampler):
 
         if (
             self.estimator is not None
-            # and isinstance(self.estimator, ClassifierMixin)
             and is_classifier(self.estimator)
             and hasattr(self.estimator, "predict_proba")
         ):

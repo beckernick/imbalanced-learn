@@ -477,8 +477,6 @@ AllKNN # doctest: +NORMALIZE_WHITESPACE
         from sklearn.base import clone
 
         for curr_size_ngh in range(1, self.nn_.n_neighbors):
-            # import pdb; pdb.set_trace()
-            # self.enn_.n_neighbors = curr_size_ngh
             self.enn_.n_neighbors = clone(self.enn_.n_neighbors).set_params(**{"n_neighbors": curr_size_ngh})
 
             X_enn, y_enn = self.enn_.fit_resample(X_, y_)

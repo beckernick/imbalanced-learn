@@ -11,10 +11,10 @@ import numpy as np
 
 from scipy.sparse import issparse
 
-from sklearn.base import clone
+from sklearn.base import clone, is_classifier
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.utils import check_random_state, _safe_indexing
-from sklearn.base import is_classifier
+
 from ..base import BaseCleaningSampler
 from ...utils import Substitution
 from ...utils._docstring import _n_jobs_docstring
@@ -121,7 +121,6 @@ CondensedNearestNeighbour # doctest: +SKIP
             self.estimator_ = KNeighborsClassifier(
                 n_neighbors=self.n_neighbors, n_jobs=self.n_jobs
             )
-        # elif isinstance(self.n_neighbors, KNeighborsClassifier):
         elif _is_kneighbors_like(self.n_neighbors) and is_classifier(self.n_neighbors):
             self.estimator_ = clone(self.n_neighbors)
         else:
@@ -165,14 +164,10 @@ CondensedNearestNeighbour # doctest: +SKIP
                 S_y = _safe_indexing(y, S_indices)
 
                 # fit knn on C
-                # import time
-                # t0 = time.time()
                 self.estimator_.fit(C_x, C_y)
-                # print(time.time()-t0)
+
                 good_classif_label = idx_maj_sample.copy()
                 # Check each sample in S if we keep it or drop it
-                # print("start S")
-                # print(S_x.shape, S_y.shape)
                 for idx_sam, (x_sam, y_sam) in enumerate(zip(S_x, S_y)):
 
                     # Do not select sample which are already well classified
@@ -184,8 +179,7 @@ CondensedNearestNeighbour # doctest: +SKIP
                     if not issparse(x_sam):
                         x_sam = x_sam.reshape(1, -1)
                     pred_y = self.estimator_.predict(x_sam)
-                    # print(x_sam.shape)
-                    # print(time.time() - t0)
+
                     # If the prediction do not agree with the true label
                     # append it in C_x
                     if y_sam != pred_y:
