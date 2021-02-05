@@ -175,7 +175,6 @@ CondensedNearestNeighbour # doctest: +SKIP
                         continue
 
                     # Classify on S
-                    # t0 = time.time()
                     if not issparse(x_sam):
                         x_sam = x_sam.reshape(1, -1)
                     pred_y = self.estimator_.predict(x_sam)
