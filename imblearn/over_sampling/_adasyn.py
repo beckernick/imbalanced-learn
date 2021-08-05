@@ -7,6 +7,7 @@
 import numpy as np
 from scipy import sparse
 
+from sklearn.neighbors import NearestNeighbors
 from sklearn.utils import check_random_state
 from sklearn.utils import _safe_indexing
 
@@ -100,7 +101,8 @@ ADASYN # doctest: +NORMALIZE_WHITESPACE
         self.nn_ = check_neighbors_object(
             "n_neighbors", self.n_neighbors, additional_neighbor=1
         )
-        self.nn_.set_params(**{"n_jobs": self.n_jobs})
+        if isinstance(self.nn_, NearestNeighbors):
+            self.nn_.set_params(**{"n_jobs": self.n_jobs})
 
     def _fit_resample(self, X, y):
         self._validate_estimator()
